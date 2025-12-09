@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1737acf6.css",
+    "main.js": "/static/js/main.23501c75.js",
+    "static/media/LiannBack.png": "/static/media/LiannBack.5299c90f4550fdf462c7.png",
+    "static/media/LiannFront.png": "/static/media/LiannFront.194955abb05d21bdf8d1.png",
+    "static/media/REVISED ORG POLO SHIRT.png": "/static/media/REVISED ORG POLO SHIRT.ca35c43e57ee92ee00c1.png",
+    "static/media/logofolio.pdf": "/static/media/logofolio.a6c003652c6ec4de9ce6.pdf",
+    "static/media/logofolio.png": "/static/media/logofolio.758462317bc33589e992.png",
+    "static/media/tmc-logo.jpg": "/static/media/tmc-logo.dfd3a578cd305964840e.jpg",
+    "static/media/CHERRY TOMATO LOGO w TEXT-03.png": "/static/media/CHERRY TOMATO LOGO w TEXT-03.df1550f9345151f45b30.png",
+    "static/media/pepeTheFrog.png": "/static/media/pepeTheFrog.8bef7692c7f05b4bace4.png",
+    "static/media/LiannGonzalesResume.pdf": "/static/media/LiannGonzalesResume.669114858da63d3e152d.pdf",
+    "index.html": "/index.html",
+    "main.1737acf6.css.map": "/static/css/main.1737acf6.css.map",
+    "main.23501c75.js.map": "/static/js/main.23501c75.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1737acf6.css",
+    "static/js/main.23501c75.js"
+  ]
+}
