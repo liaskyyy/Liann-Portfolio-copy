@@ -1,58 +1,16 @@
 {
-  "name": "liann-portfolio",
-  "version": "0.1.0",
+  "name": "liann-portfolio-root",
   "private": true,
+  "scripts": {
+    "dev": "npm --prefix \"Liann-Portfolio-main/Liann-Portfolio-main\" run dev",
+    "start": "npm --prefix \"Liann-Portfolio-main/Liann-Portfolio-main\" run start",
+    "build": "npm --prefix \"Liann-Portfolio-main/Liann-Portfolio-main\" run build",
+    "test": "npm --prefix \"Liann-Portfolio-main/Liann-Portfolio-main\" run test"
+  },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
-    "@supabase/supabase-js": "^2.87.0",
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.8.0",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "framer-motion": "^12.23.24",
-    "gsap": "^3.14.1",
-    "liann-portfolio-root": "file:../..",
-    "lucide-react": "^0.544.0",
-    "motion": "^12.23.25",
-    "ogl": "^1.0.11",
-    "openai": "^6.7.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-icons": "^5.5.0",
+    "lucide-react": "^0.556.0",
     "react-router-dom": "^7.10.1",
-    "react-scripts": "5.0.1",
-    "react-typed": "^2.0.12",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.20",
-    "daisyui": "^5.3.10",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.13"
+    "react-scripts": "^5.0.1"
   }
 }

@@ -2,11 +2,11 @@
   "name": "liann-portfolio-root",
   "private": true,
   "scripts": {
-  "start": "react-scripts start",
-  "build": "react-scripts build",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject"
-},
+    "dev": "npm --prefix \"Liann-Portfolio-main/Liann-Portfolio-main\" run dev",
+    "start": "npm --prefix \"Liann-Portfolio-main/Liann-Portfolio-main\" run start",
+    "build": "npm --prefix \"Liann-Portfolio-main/Liann-Portfolio-main\" run build",
+    "test": "npm --prefix \"Liann-Portfolio-main/Liann-Portfolio-main\" run test"
+  },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "lucide-react": "^0.556.0",
