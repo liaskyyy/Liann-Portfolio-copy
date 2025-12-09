@@ -4,11 +4,14 @@
   "private": true,
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@supabase/supabase-js": "^2.87.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "framer-motion": "^12.23.24",
+    "gsap": "^3.14.1",
+    "liann-portfolio-root": "file:../..",
     "lucide-react": "^0.544.0",
     "motion": "^12.23.25",
     "ogl": "^1.0.11",
@@ -16,6 +19,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
+    "react-router-dom": "^7.10.1",
     "react-scripts": "5.0.1",
     "react-typed": "^2.0.12",
     "web-vitals": "^2.1.4"

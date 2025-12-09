@@ -1,98 +1,166 @@
-import React from "react";
-import { Mail, Github } from "lucide-react";
-import { BsBehance } from "react-icons/bs";
-import EmailForm from "./api/EmailForm";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { supabase } from "../config/supabaseClient";
+import { Mail, Github, ExternalLink, Send } from "lucide-react";
 
-export default function Contact() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 },
-    },
-  };
+const Contact = () => {
+  // 1. Default Data (Matches your screenshot)
+  const [contactInfo, setContactInfo] = useState({
+    section_title: "Contact Me",
+    section_description: "I’d love to hear from you! Whether it’s a question, collaboration, or just a hello — feel free to reach out.",
+    email: "lianngonzales7@gmail.com",
+    github_url: "https://github.com/liaskyyy",
+    behance_url: "https://www.behance.net/lianngonza304c",
+  });
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 },
+  // 2. Fetch Data from Supabase
+  useEffect(() => {
+    const fetchContact = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("contact")
+          .select("*")
+          .eq("id", 1)
+          .single();
+
+        if (data) {
+          setContactInfo({
+            section_title: data.section_title || contactInfo.section_title,
+            section_description: data.section_description || contactInfo.section_description,
+            email: data.email || contactInfo.email,
+            github_url: data.github_url || contactInfo.github_url,
+            behance_url: data.behance_url || contactInfo.behance_url,
+          });
+        }
+      } catch (err) {
+        console.error("Error fetching contact info:", err);
+      }
+    };
+
+    fetchContact();
+  }, []);
+
+  // Helper to remove 'https://' for a cleaner look (like in your image)
+  const formatUrl = (url) => {
+    if (!url) return "";
+    return url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
   };
 
   return (
-    <section
-      id="contact"
-      className="py-16 px-6 bg-base-100 text-base-content transition-colors"
-    >
-      <div className="text-base-content dark:text-white max-w-2xl mx-auto text-center">
-
-        {/* Header */}
-        <motion.h2
-          className="text-3xl font-bold mb-4 text-primary dark:text-primary-content"
-          initial={{ opacity: 0, y: -30 }}
+    <section id="contact" className="py-20 bg-[#0a0f1c] text-white min-h-screen flex flex-col items-center justify-center">
+      <div className="max-w-4xl mx-auto px-6 w-full">
+        
+        {/* --- Header Section --- */}
+        <motion.div 
+          className="text-center mb-10"
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true }}
         >
-          Contact Me
-        </motion.h2>
-
-        <motion.p
-          className="mb-10 text-base text-base-content dark:text-base-content/90"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          I’d love to hear from you! Whether it’s a question, collaboration, or just a hello — feel free to reach out.
-        </motion.p>
-
-        {/* Contact Buttons */}
-        <motion.div
-          className="flex flex-col md:flex-row gap-4 justify-center mb-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <motion.a
-            variants={itemVariants}
-            href="mailto:lianngonzales7@gmail.com"
-            className="btn btn-outline btn-primary dark:btn-primary dark:text-primary-content flex items-center gap-2"
-          >
-            <Mail className="w-5 h-5" /> lianngonzales7@gmail.com
-          </motion.a>
-
-          <motion.a
-            variants={itemVariants}
-            href="https://github.com/liaskyyy"
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-outline btn-primary dark:btn-primary dark:text-primary-content flex items-center gap-2"
-          >
-            <Github className="w-5 h-5" /> github.com/liaskyyy
-          </motion.a>
-
-          <motion.a
-            variants={itemVariants}
-            href="https://www.behance.net/lianngonza304c"
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-outline btn-primary dark:btn-primary dark:text-primary-content flex items-center gap-2"
-          >
-            <BsBehance className="w-5 h-5" /> behance.net/lianngonza304c
-          </motion.a>
+          <h2 className="text-4xl font-bold mb-4">{contactInfo.section_title}</h2>
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+            {contactInfo.section_description}
+          </p>
         </motion.div>
 
-        {/* Email Form */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+        {/* --- Links Row (Email, GitHub, Behance) --- */}
+        <motion.div 
+          className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-16 text-gray-300"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
         >
-          <EmailForm />
+          {/* Email */}
+          <a href={`mailto:${contactInfo.email}`} className="flex items-center gap-2 hover:text-white transition-colors">
+            <Mail size={20} />
+            <span>{contactInfo.email}</span>
+          </a>
+
+          {/* GitHub */}
+          {contactInfo.github_url && (
+            <a 
+              href={contactInfo.github_url} 
+              target="_blank" 
+              rel="noreferrer" 
+              className="flex items-center gap-2 hover:text-white transition-colors"
+            >
+              <Github size={20} />
+              <span>{formatUrl(contactInfo.github_url)}</span>
+            </a>
+          )}
+
+          {/* Behance */}
+          {contactInfo.behance_url && (
+            <a 
+              href={contactInfo.behance_url} 
+              target="_blank" 
+              rel="noreferrer" 
+              className="flex items-center gap-2 hover:text-white transition-colors"
+            >
+              <span className="font-bold text-lg">Bē</span> {/* Simple text icon for Behance */}
+              <span>{formatUrl(contactInfo.behance_url)}</span>
+            </a>
+          )}
         </motion.div>
+
+
+        {/* --- Form Section --- */}
+        <motion.div 
+          className="w-full max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+        >
+          <h3 className="text-center text-blue-500 text-2xl font-semibold mb-6">
+            Send Me a Message
+          </h3>
+
+          <form className="space-y-4">
+            <div>
+              <label className="block text-gray-500 mb-1 text-sm">Name</label>
+              <input 
+                type="text" 
+                className="w-full bg-white rounded-md p-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-500 mb-1 text-sm">Email</label>
+              <input 
+                type="email" 
+                className="w-full bg-white rounded-md p-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-500 mb-1 text-sm">Subject</label>
+              <input 
+                type="text" 
+                className="w-full bg-white rounded-md p-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-500 mb-1 text-sm">Message</label>
+              <textarea 
+                className="w-full bg-white rounded-md p-3 text-gray-900 h-32 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <button 
+              type="submit"
+              className="w-full bg-[#3246ea] hover:bg-blue-600 text-white font-semibold py-3 rounded-md transition-all flex items-center justify-center gap-2"
+            >
+              Send Message
+            </button>
+          </form>
+        </motion.div>
+
       </div>
     </section>
   );
-}
+};
+
+export default Contact;

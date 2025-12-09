@@ -1,6 +1,6 @@
 import React from "react";
-import Weather from "./api/Weather";
-import ThemeToggle from "./ui/ThemeToggle"; 
+import Weather from "../api/Weather";
+import ThemeToggle from "../ui/ThemeToggle"; 
 
 function Header() {
   const [menuOpen, setMenuOpen] = React.useState(false);
