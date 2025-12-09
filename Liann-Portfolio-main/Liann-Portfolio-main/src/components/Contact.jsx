@@ -49,8 +49,8 @@ const Contact = () => {
   return (
     <section 
       id="contact" 
-      // UPDATED: Dynamic background and text colors for Light/Dark modes
-      className="py-20 bg-gray-50 dark:bg-[#0a0f1c] text-gray-900 dark:text-white min-h-screen flex flex-col items-center justify-center transition-colors duration-300"
+      // UPDATED: Changed dark:bg-[#0a0f1c] to dark:bg-black
+      className="py-20 bg-gray-50 dark:bg-black text-gray-900 dark:text-white min-h-screen flex flex-col items-center justify-center transition-colors duration-300"
     >
       <div className="max-w-4xl mx-auto px-6 w-full">
         
@@ -62,7 +62,6 @@ const Contact = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl font-bold mb-4">{contactInfo.section_title}</h2>
-          {/* UPDATED: Description text color */}
           <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
             {contactInfo.section_description}
           </p>
@@ -70,7 +69,6 @@ const Contact = () => {
 
         {/* --- Links Row (Email, GitHub, Behance) --- */}
         <motion.div 
-          // UPDATED: Link container text colors
           className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-16 text-gray-600 dark:text-gray-300"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -125,9 +123,7 @@ const Contact = () => {
 
           <form className="space-y-4">
             <div>
-              {/* UPDATED: Label color */}
               <label className="block text-gray-700 dark:text-gray-400 mb-1 text-sm font-medium">Name</label>
-              {/* UPDATED: Input styling for Light/Dark modes */}
               <input 
                 type="text" 
                 className="w-full p-3 rounded-md border outline-none transition-all
