@@ -66,10 +66,6 @@ export default function ProjectsManager() {
     category: "it",
   });
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
   const fetchProjects = async () => {
     setLoading(true);
     try {
@@ -89,9 +85,15 @@ export default function ProjectsManager() {
       }
     } catch (error) {
       console.error("Error fetching projects:", error.message);
+      setProjects(defaultProjects);
+      setIsUsingDefaults(true);
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
   // 2. HELPER TO RESOLVE IMAGE SOURCE
   const getProjectImage = (imageString) => {

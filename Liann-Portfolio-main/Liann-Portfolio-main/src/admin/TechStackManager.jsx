@@ -40,10 +40,6 @@ export default function TechStackManager() {
   });
 
   // --- 3. INITIAL FETCH ---
-  useEffect(() => {
-    fetchSkills();
-  }, []);
-
   const fetchSkills = async () => {
     setLoading(true);
     try {
@@ -67,6 +63,10 @@ export default function TechStackManager() {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchSkills();
+  }, []);
 
   // --- 4. CRUD OPERATIONS ---
   const handleSave = async () => {

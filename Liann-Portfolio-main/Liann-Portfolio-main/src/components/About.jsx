@@ -18,7 +18,6 @@ function About() {
   };
 
   const [about, setAbout] = useState(defaultAbout);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let mounted = true;
@@ -34,7 +33,7 @@ function About() {
       } catch (err) {
         // fallback to default
       } finally {
-        if (mounted) setLoading(false);
+        // cleanup
       }
     };
     fetchAbout();

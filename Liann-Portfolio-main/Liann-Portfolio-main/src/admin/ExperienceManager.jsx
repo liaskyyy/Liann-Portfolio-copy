@@ -40,10 +40,6 @@ export default function ExperienceManager() {
     is_currently: false, 
   });
 
-  useEffect(() => {
-    fetchExperiences();
-  }, []);
-
   const fetchExperiences = async () => {
     setLoading(true);
     try {
@@ -67,6 +63,10 @@ export default function ExperienceManager() {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    fetchExperiences();
+  }, []);
 
   const handleSave = async () => {
     if (!newExp.role || !newExp.period || !newExp.description) {

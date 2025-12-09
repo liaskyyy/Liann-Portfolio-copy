@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "../config/supabaseClient";
-import { Mail, Github, ExternalLink, Send } from "lucide-react";
+import { Mail, Github } from "lucide-react";
 
 const Contact = () => {
   // 1. Default Data (Matches your screenshot)
@@ -17,7 +17,7 @@ const Contact = () => {
   useEffect(() => {
     const fetchContact = async () => {
       try {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from("contact")
           .select("*")
           .eq("id", 1)

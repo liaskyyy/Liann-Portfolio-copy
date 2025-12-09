@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { supabase } from "../config/supabaseClient";
 import { Save, RefreshCw } from "lucide-react";
 
 export default function AboutManager() {
-  // 1. Define the Defaults (Exactly what is on your Home page now)
+  // 1. Define Defaults
   const DEFAULT_STRINGS = [
     "I am an IT Student 💻",
     "I am a Graphic Designer 🎨",
@@ -13,13 +13,13 @@ export default function AboutManager() {
     "I am a UI/UX Designer 📱"
   ];
 
-  // 2. Initialize state with defaults so the boxes are never empty on load
+  // 2. Initialize state
   const [aboutData, setAboutData] = useState({
     name: "Liann Gonzales",
     title: "IT professional and digital creative",
     location: "Bulacan, Philippines",
     circular_text: "Information*Technology*",
-    resume_link: "", // Leave empty to use the default PDF file
+    resume_link: "",
     typed_strings: DEFAULT_STRINGS, 
     paragraph1: "",
     paragraph2: "",
@@ -30,11 +30,8 @@ export default function AboutManager() {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
 
-  useEffect(() => {
-    fetchAboutData();
-  }, []);
-
-  const fetchAboutData = async () => {
+  // 3. Fetch Data Function
+  const fetchAboutData = useCallback(async () => {
     setFetching(true);
     try {
       const { data, error } = await supabase
@@ -47,13 +44,13 @@ export default function AboutManager() {
 
       if (data) {
         setAboutData({
-          name: data.name || "Liann Gonzales",
+          name: data.name || "",
           title: data.title || "",
           location: data.location || "",
-          circular_text: data.circular_text || "Information*Technology*",
+          circular_text: data.circular_text || "",
           resume_link: data.resume_link || "",
-          // If DB has strings, use them. If not, use the DEFAULT_STRINGS.
-          typed_strings: (data.typed_strings && data.typed_strings.length > 0) 
+          // Ensure it's an array
+          typed_strings: (Array.isArray(data.typed_strings) && data.typed_strings.length > 0)
             ? data.typed_strings 
             : DEFAULT_STRINGS,
           paragraph1: data.paragraph1 || "",
@@ -66,7 +63,12 @@ export default function AboutManager() {
       console.error("Error fetching about data:", error.message);
     }
     setFetching(false);
-  };
+  }, []); // Empty dependency array ensures this function is stable
+
+  // 4. useEffect to run on mount
+  useEffect(() => {
+    fetchAboutData();
+  }, [fetchAboutData]);
 
   const handleSave = async () => {
     setLoading(true);
@@ -85,7 +87,8 @@ export default function AboutManager() {
 
   const handleTypedStringsChange = (e) => {
     const val = e.target.value;
-    const array = val.split("\n"); // Split by new line
+    // Split by new line to create array
+    const array = val.split("\n"); 
     setAboutData({ ...aboutData, typed_strings: array });
   };
 
@@ -145,15 +148,15 @@ export default function AboutManager() {
           </div>
         </div>
 
-        {/* --- HERE IS THE FIX FOR THE TYPED TEXT --- */}
+        {/* --- TYPED TEXT AREA --- */}
         <div>
           <label className="block text-sm font-semibold text-gray-300 mb-2">
-            Animated Typed Text (Edit list here)
+            Animated Typed Text (One phrase per line)
           </label>
           <textarea
             className="w-full p-3 bg-gray-700 border border-gray-600 rounded text-white h-48 font-mono text-sm focus:border-blue-500 outline-none leading-relaxed"
-            // The .join("\n") makes sure the array is shown as text lines
-            value={aboutData.typed_strings.join("\n")}
+            // Join array with newlines for display, use optional chaining
+            value={aboutData.typed_strings?.join("\n") || ""}
             onChange={handleTypedStringsChange}
             placeholder="I am an IT Student&#10;I am a Graphic Designer"
           />
@@ -219,7 +222,7 @@ export default function AboutManager() {
             </label>
             <textarea
               className="w-full p-3 bg-gray-700 border border-gray-600 rounded text-white h-24 focus:border-blue-500 outline-none"
-              value={aboutData[`paragraph${num}`]}
+              value={aboutData[`paragraph${num}`] || ""}
               onChange={(e) => setAboutData({ ...aboutData, [`paragraph${num}`]: e.target.value })}
             />
           </div>

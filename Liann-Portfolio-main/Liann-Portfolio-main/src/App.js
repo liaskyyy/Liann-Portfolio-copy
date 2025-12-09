@@ -17,8 +17,17 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard"; 
 
 function App() {
+  // Allow running the app under a subpath (GitHub Pages). Prefer an
+  // explicit `REACT_APP_BASENAME` env var for local development so you
+  // can force the app to run at root (set to empty). By default we do
+  // not automatically use `PUBLIC_URL` during development to avoid the
+  // app being served under a repo subpath locally.
+  const basename = (process.env.REACT_APP_BASENAME !== undefined)
+    ? process.env.REACT_APP_BASENAME
+    : "";
+
   return (
-    <Router>
+    <Router basename={basename}>
       <div className="min-h-screen bg-base-100 dark:bg-gray-900 transition-colors duration-300">
         <Routes>
           
