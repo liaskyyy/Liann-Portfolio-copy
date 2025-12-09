@@ -4,7 +4,7 @@ import { supabase } from "../config/supabaseClient";
 import { Mail, Github } from "lucide-react";
 
 const Contact = () => {
-  // 1. Default Data (Matches your screenshot)
+  // 1. Default Data
   const [contactInfo, setContactInfo] = useState({
     section_title: "Contact Me",
     section_description: "I’d love to hear from you! Whether it’s a question, collaboration, or just a hello — feel free to reach out.",
@@ -17,7 +17,7 @@ const Contact = () => {
   useEffect(() => {
     const fetchContact = async () => {
       try {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from("contact")
           .select("*")
           .eq("id", 1)
@@ -40,14 +40,18 @@ const Contact = () => {
     fetchContact();
   }, []);
 
-  // Helper to remove 'https://' for a cleaner look (like in your image)
+  // Helper to remove 'https://' for a cleaner look
   const formatUrl = (url) => {
     if (!url) return "";
     return url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
   };
 
   return (
-    <section id="contact" className="py-20 bg-[#0a0f1c] text-white min-h-screen flex flex-col items-center justify-center">
+    <section 
+      id="contact" 
+      // UPDATED: Dynamic background and text colors for Light/Dark modes
+      className="py-20 bg-gray-50 dark:bg-[#0a0f1c] text-gray-900 dark:text-white min-h-screen flex flex-col items-center justify-center transition-colors duration-300"
+    >
       <div className="max-w-4xl mx-auto px-6 w-full">
         
         {/* --- Header Section --- */}
@@ -58,21 +62,23 @@ const Contact = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl font-bold mb-4">{contactInfo.section_title}</h2>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+          {/* UPDATED: Description text color */}
+          <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
             {contactInfo.section_description}
           </p>
         </motion.div>
 
         {/* --- Links Row (Email, GitHub, Behance) --- */}
         <motion.div 
-          className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-16 text-gray-300"
+          // UPDATED: Link container text colors
+          className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-16 text-gray-600 dark:text-gray-300"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
           {/* Email */}
-          <a href={`mailto:${contactInfo.email}`} className="flex items-center gap-2 hover:text-white transition-colors">
+          <a href={`mailto:${contactInfo.email}`} className="flex items-center gap-2 hover:text-[#3246ea] dark:hover:text-white transition-colors font-medium">
             <Mail size={20} />
             <span>{contactInfo.email}</span>
           </a>
@@ -83,7 +89,7 @@ const Contact = () => {
               href={contactInfo.github_url} 
               target="_blank" 
               rel="noreferrer" 
-              className="flex items-center gap-2 hover:text-white transition-colors"
+              className="flex items-center gap-2 hover:text-[#3246ea] dark:hover:text-white transition-colors font-medium"
             >
               <Github size={20} />
               <span>{formatUrl(contactInfo.github_url)}</span>
@@ -96,9 +102,9 @@ const Contact = () => {
               href={contactInfo.behance_url} 
               target="_blank" 
               rel="noreferrer" 
-              className="flex items-center gap-2 hover:text-white transition-colors"
+              className="flex items-center gap-2 hover:text-[#3246ea] dark:hover:text-white transition-colors font-medium"
             >
-              <span className="font-bold text-lg">Bē</span> {/* Simple text icon for Behance */}
+              <span className="font-bold text-lg">Bē</span>
               <span>{formatUrl(contactInfo.behance_url)}</span>
             </a>
           )}
@@ -113,45 +119,63 @@ const Contact = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <h3 className="text-center text-blue-500 text-2xl font-semibold mb-6">
+          <h3 className="text-center text-[#3246ea] text-2xl font-semibold mb-6">
             Send Me a Message
           </h3>
 
           <form className="space-y-4">
             <div>
-              <label className="block text-gray-500 mb-1 text-sm">Name</label>
+              {/* UPDATED: Label color */}
+              <label className="block text-gray-700 dark:text-gray-400 mb-1 text-sm font-medium">Name</label>
+              {/* UPDATED: Input styling for Light/Dark modes */}
               <input 
                 type="text" 
-                className="w-full bg-white rounded-md p-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 rounded-md border outline-none transition-all
+                           bg-white dark:bg-[#1a1f2e] 
+                           border-gray-300 dark:border-gray-700 
+                           text-gray-900 dark:text-white 
+                           focus:ring-2 focus:ring-[#3246ea] focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-gray-500 mb-1 text-sm">Email</label>
+              <label className="block text-gray-700 dark:text-gray-400 mb-1 text-sm font-medium">Email</label>
               <input 
                 type="email" 
-                className="w-full bg-white rounded-md p-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 rounded-md border outline-none transition-all
+                           bg-white dark:bg-[#1a1f2e] 
+                           border-gray-300 dark:border-gray-700 
+                           text-gray-900 dark:text-white 
+                           focus:ring-2 focus:ring-[#3246ea] focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-gray-500 mb-1 text-sm">Subject</label>
+              <label className="block text-gray-700 dark:text-gray-400 mb-1 text-sm font-medium">Subject</label>
               <input 
                 type="text" 
-                className="w-full bg-white rounded-md p-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 rounded-md border outline-none transition-all
+                           bg-white dark:bg-[#1a1f2e] 
+                           border-gray-300 dark:border-gray-700 
+                           text-gray-900 dark:text-white 
+                           focus:ring-2 focus:ring-[#3246ea] focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-gray-500 mb-1 text-sm">Message</label>
+              <label className="block text-gray-700 dark:text-gray-400 mb-1 text-sm font-medium">Message</label>
               <textarea 
-                className="w-full bg-white rounded-md p-3 text-gray-900 h-32 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 rounded-md border outline-none transition-all h-32 resize-none
+                           bg-white dark:bg-[#1a1f2e] 
+                           border-gray-300 dark:border-gray-700 
+                           text-gray-900 dark:text-white 
+                           focus:ring-2 focus:ring-[#3246ea] focus:border-transparent"
               />
             </div>
 
             <button 
               type="submit"
-              className="w-full bg-[#3246ea] hover:bg-blue-600 text-white font-semibold py-3 rounded-md transition-all flex items-center justify-center gap-2"
+              className="w-full bg-[#3246ea] hover:bg-blue-600 text-white font-semibold py-3 rounded-md transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
               Send Message
             </button>
